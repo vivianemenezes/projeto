@@ -17,17 +17,17 @@ public class Action {
 	//private Hashtable<Integer, Integer> changeSetHash = new Hashtable<Integer, Integer>();
 	
 	/*For Ritanen's regression */
-	private Vector<BDD> effectVec = new Vector<BDD>();
+	/*private Vector<BDD> effectVec = new Vector<BDD>();
 	Hashtable<Integer,BDD> epcPTable = new Hashtable<Integer, BDD>();
 	Hashtable<Integer,BDD> epcnotPTable = new Hashtable<Integer, BDD>();
 	Hashtable<Integer,String> varTable;
 	Hashtable<Integer,String> hstEffect = new Hashtable<>();
 	Hashtable<String,Integer> varTable2;
 	List<String> listEff = new ArrayList<String>();
-	//long timeEpc = 0;
+	//long timeEpc = 0;*/
 
 	/*** Constructor ***/
-	public Action(String actionName, String preCond, String eff, BDDCreator cre, String pType) {
+	public Action(String actionName, String preCond, String eff, BDDCreator cre) {
 		//System.out.println(actionName);
 		//System.out.println(preCond);
 		//System.out.println(eff);
@@ -61,16 +61,15 @@ public class Action {
 		//effect.printSet();
 
 
-		if(pType.equals("ritanen")) { //computes epc
-			effectVec = cre.createBddVector(eff);
-			fillEpcTable();		
-		} else if(pType.equals("propplan")) { //compute change set	
-			for(String s : changeSet) {
-				if(change == null) {
-					change = cre.createAndBdd(s);
-				} else {
-					change.andWith(cre.createAndBdd(s));
-				}
+		//if(pType.equals("ritanen")) { //computes epc
+		//	effectVec = cre.createBddVector(eff);
+		//	fillEpcTable();		
+		//} else if(pType.equals("propplan")) { //compute change set	
+		for(String s : changeSet) {
+			if(change == null) {
+				change = cre.createAndBdd(s);
+			} else {
+				change.andWith(cre.createAndBdd(s));
 			}
 		}
 	}
@@ -111,6 +110,7 @@ public class Action {
 	}
 
 
+	/*TODO: [WARLLES]: CHANGES PARA AÇÃO NÃO-DETERMINÍSTICAS. */
 	/**Creates the change set which is the union of all propositions involved in the effect list, without negation**/
 	public Vector<String> createChangeSet(String eff){
 		StringTokenizer tknEff = new StringTokenizer(eff, ",");
@@ -145,14 +145,13 @@ public class Action {
 	}
 	
 	/* The condition (E) is defined for each action and proposition */
-	public void fillEpcTable(){
+	/*public void fillEpcTable(){
 		BDDFactory factory = precondition.getFactory();
 		BDD epcP;
 		BDD epcNotP;
 		BDD prop;
 		BDD negprop;	
 		
-		/*For each propositional value, computes the EPC.*/
 		for(int i = 0; i < varTable.size(); i++){		
 			//BDD for proposition
 			prop = factory.ithVar(i);
@@ -165,29 +164,29 @@ public class Action {
 			epcPTable.put(i, epcP); //Table with trueBdd (<>) or falseBdd ("")
 			epcnotPTable.put(i,epcNotP);
 		}
-	}
+	}*/
 		
-	public Hashtable<Integer, BDD> getEpcnotPTable() {
+	/*public Hashtable<Integer, BDD> getEpcnotPTable() {
 		return epcnotPTable;
 	}
 	
 	public Hashtable<Integer, BDD> getEpcPTable() {
 		return epcPTable;
-	}
+	}*/
 		
 	/*  EPC_literal for an action effect. 
 	 *  Verifies if the effect is a literal or if the effect is a conjunction. */
-	public BDD epc(BDD literal){
+	/*public BDD epc(BDD literal){
 		Vector<BDD> effectVec = this.effectVec;
 		if(effectVec.size() == 1){
 			return epc(literal,effectVec.firstElement());
 		}else{
 			return epc(literal, effectVec);
 		}
-	}
+	}*/
 		
 	/* EPC_literal(effect) when the effect is a literal */
-	public BDD epc(BDD literal, BDD effect){	
+	/*public BDD epc(BDD literal, BDD effect){	
 		BDD trueBdd = effect.getFactory().one(); //bdd_true <>
 		BDD falseBdd = effect.getFactory().zero(); //bdd_false ""
 		
@@ -196,10 +195,10 @@ public class Action {
 		}else{
 			return falseBdd;
 		}
-	}		
+	}*/		
 	
 	/* EPC_literal(effect) when the effect is a conjunction */
-	public BDD epc(BDD literal, Vector<BDD> effect){
+	/*public BDD epc(BDD literal, Vector<BDD> effect){
 		BDD result = null;
 		for (BDD e : effect) {
 			if(result == null){
@@ -210,7 +209,7 @@ public class Action {
 			}
 		}
 		return result;	
-	}
+	}*/
 		
 	public String getName() {
 		return name;
