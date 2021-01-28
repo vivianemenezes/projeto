@@ -3,8 +3,8 @@ import java.io.IOException;
 
 import net.sf.javabdd.BDD;
 
-/* Implementation of the algorithms that performs backward planning, using regression.
- * The method proposed by [Fourmann, 2000] and the method proposed  by "[Ritanen, 2008]" */
+/* Implementation of the algorithms that performs backward planning, using deterministic regression.
+ * The method proposed by [Fourmann, 2000]" */
 
 public class GUI {
 	
@@ -26,13 +26,13 @@ public class GUI {
 			//int cont = 0;
 			//while(cont <= 1) {
 				String fileCanonicalPath = new File(/*PATH +*/ fileName /*+ "_" + cont + ".txt"*/).getCanonicalPath();
-				String type = "propplan";//"ritanen" or "propplan" args[1] = 
+				///String type = "propplan";//"ritanen" or "propplan" args[1] = 
 				int nodenum = 999999; //Integer.parseInt(args[2]);
 				int cachesize =  999999; //Integer.parseInt(args[3]);
 
 
 				ModelReader model = new ModelReader();
-				model.fileReader(fileCanonicalPath, type, nodenum, cachesize);
+				model.fileReader(fileCanonicalPath, nodenum, cachesize);
 				
 				System.out.println("File: " + 
 				fileCanonicalPath.substring(fileCanonicalPath.lastIndexOf("/") + 1, fileCanonicalPath.lastIndexOf(".")));
